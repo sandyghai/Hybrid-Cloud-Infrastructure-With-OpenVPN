@@ -111,8 +111,6 @@ You can create a IPv6 tunnel over IPv4 with OpenVPN. Add the following to your S
 	iroute-ipv6 [Your Client Ipv6 Subnet CIDR]
 	</pre>
 
-Add following ip6tables rules
-
 - ip6tables (IPV6)
 	<pre>
 	ip6tables -A FORWARD -i eth+ -o tun+ -j ACCEPT
