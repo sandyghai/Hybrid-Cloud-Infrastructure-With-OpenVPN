@@ -22,10 +22,10 @@ We are not going to cover building a certificate authority in this post. We have
 
 Install OpenVPN -  Server (AWS Linux 2 AMI)
 ===========================================
-yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-yum -y install yum-utils
-yum-config-manager --enable epel
-yum -y install openvpn
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm\n
+yum -y install yum-utils\n
+yum-config-manager --enable epel\n
+yum -y install openvpn\n
                                     
 Server Configurations - server.conf
 ===================================
