@@ -77,43 +77,47 @@ Firewalls - Server
 iptables -A FORWARD -i eth+ -o tun+ -j ACCEPT
 iptables -A FORWARD -i tun+ -o eth+ -m state --state RELATED,ESTABLISHED -j ACCEPT
 
-Enable IPv4 Forwarding - /etc/sysctl.conf
-=========================================
-
-Make changes to /etc/sysctl.conf
+Enable IPv4 Forwarding - changes to /etc/sysctl.conf
+====================================================
+<pre>
 net.ipv4.ip_forward = 1
-         
+</pre>
+
 What about IPV6? [Optional but Interesting]
 ===========================================
-
 You can create a IPv6 tunnel over IPv4 with OpenVPN. Add the following to your Server.conf file and there will no changes require to your client.conf file.
 
  -  Server Configurations
-
+ 	<pre>
  	tun-ipv6
 	push tun-ipv6
  	server-ipv6 2001:0db8:ee00:abcd::/64
  	route-ipv6 [Your Client Ipv6 Subnet CIDR]
  	push "route-ipv6 [Your Server Ipv6 CIDR]"
+ 	</pre>
 
  - ccd/client
+	<pre>
 	iroute-ipv6 [Your Client Ipv6 Subnet CIDR]
+	</pre>
 
 Add following ip6tables rules
 
 - ip6tables (IPV6)
+	<pre>
 	ip6tables -A FORWARD -i eth+ -o tun+ -j ACCEPT
 	ip6tables -A FORWARD -i tun+ -o eth+ -m state --state RELATED,ESTABLISHED -j ACCEPT
+	</pre>
 
-- Enable Ipv6 forwarding
-Make changes to /etc/sysctl.conf
-
-net.ipv6.conf.default.forwarding = 1
-net.ipv6.conf.all.forwarding = 1
-net.ipv6.conf.eth0.forwarding = 0
-net.ipv6.conf.eth0.accept_ra = 1
-net.ipv6.conf.all.accept_ra = 1
-net.ipv6.conf.default.accept_ra = 1
+- Enable Ipv6 forwarding changes to /etc/sysctl.conf
+	<pre>
+	net.ipv6.conf.default.forwarding = 1
+	net.ipv6.conf.all.forwarding = 1
+	net.ipv6.conf.eth0.forwarding = 0
+	net.ipv6.conf.eth0.accept_ra = 1
+	net.ipv6.conf.all.accept_ra = 1
+	net.ipv6.conf.default.accept_ra = 1
+	</pre>
 
 Discussion
 ==========
