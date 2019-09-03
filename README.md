@@ -2,8 +2,6 @@ Hybrid Cloud Infrastructure Using OpenVPN
 =========================================
 Hybrid cloud means the use of both public cloud platform and on-premises resources. Public cloud platforms, such as Amazon Web Services, Microsoft Azure or Google Cloud platform which offers infrastructure as a service (IaaS). A hybrid cloud enables an organization to extend their datacenter capacity, utilize new cloud-native capabilities, move applications closer to customers, and create a backup and disaster recovery solution with cost-effective high availability. Hybrid cloud has benefits but comes with technical, business and management challenges and requires the expertise of cloud architects.
 
-This document will explain to you how to build your own hybrid cloud using AWS and OpenVPN.
-
 Background
 ==========
 I was asked to automate and orchestrate on-demand Hybrid Cloud Infrastructure which will help us to connect with our client's private environment to identify loopholes and perform necessary actions requires in their environment.
@@ -22,60 +20,72 @@ We are not going to cover building a certificate authority in this post. We have
 
 Install OpenVPN -  Server (AWS Linux 2 AMI)
 ===========================================
+<pre>
 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum -y install yum-utils
 yum-config-manager --enable epel
 yum -y install openvpn
-                                    
+</pre>
+
 Server Configurations - server.conf
 ===================================
-port 443
-proto tcp
-dev tun
-ca ca.crt
-cert server.crt
-key server.key
-dh dh.pem
-topology subnet
-server 162.200.100.0 255.255.255.0
-route [Your Client Subnet] [Subnet Mask]
-push "route [Your Server Private Subnet] [Subnet Mask]"
-client-config-dir ccd
-ifconfig-pool-persist /var/log/openvpn/ipp.txt
-keepalive 10 120
-cipher AES-256-CBC
-persist-key
-persist-tun
-status /var/log/openvpn/openvpn-status.log
-verb 3
+-  server.conf
+	<pre>
+	port 443
+	proto tcp
+	dev tun
+	ca ca.crt
+	cert server.crt
+	key server.key
+	dh dh.pem
+	topology subnet
+	server 162.200.100.0 255.255.255.0
+	route [Your Client Subnet] [Subnet Mask]
+	push "route [Your Server Private Subnet] [Subnet Mask]"
+	client-config-dir ccd
+	ifconfig-pool-persist /var/log/openvpn/ipp.txt
+	keepalive 10 120
+	cipher AES-256-CBC
+	persist-key
+	persist-tun
+	status /var/log/openvpn/openvpn-status.log
+	verb 3
+	</pre>
 
 - ccd/client
+	<pre>
  	iroute [Your Client Subnet] [Subnet Mask]
+ 	</pre>
 
 Client Configurations - client.conf 
 ===================================
-client
-dev tun
-proto tcp
-remote [Your Server Public IP Address]
-port 443
-topology subnet
-resolv-retry infinite
-nobind
-persist-key
-persist-tun
-ca ca.crt
-cert client.crt
-key client.key
-remote-cert-tls server
-cipher AES-256-CBC
-verb 3
+-  server.conf
+	<pre>
+	client
+	dev tun
+	proto tcp
+	remote [Your Server Public IP Address]
+	port 443
+	topology subnet
+	resolv-retry infinite
+	nobind
+	persist-key
+	persist-tun
+	ca ca.crt
+	cert client.crt
+	key client.key
+	remote-cert-tls server
+	cipher AES-256-CBC
+	verb 3
+	</pre>
 
 Firewalls - Server
 ==================
 - iptables   (IPV4)
-iptables -A FORWARD -i eth+ -o tun+ -j ACCEPT
-iptables -A FORWARD -i tun+ -o eth+ -m state --state RELATED,ESTABLISHED -j ACCEPT
+	<pre>
+	iptables -A FORWARD -i eth+ -o tun+ -j ACCEPT
+	iptables -A FORWARD -i tun+ -o eth+ -m state --state RELATED,ESTABLISHED -j ACCEPT
+	</pre>
 
 Enable IPv4 Forwarding - changes to /etc/sysctl.conf
 ====================================================
