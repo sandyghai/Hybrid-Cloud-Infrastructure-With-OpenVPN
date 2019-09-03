@@ -59,7 +59,7 @@ Server Configurations - server.conf
 
 Client Configurations - client.conf 
 ===================================
--  server.conf
+-  client.conf
 	<pre>
 	client
 	dev tun
