@@ -95,7 +95,7 @@ net.ipv4.ip_forward = 1
 
 What about IPV6? [Optional but Interesting]
 ===========================================
-You can create a IPv6 tunnel over IPv4 with OpenVPN. Add the following to your Server.conf file and there will no changes require to your client.conf file.
+You can create a IPv6 tunnel over IPv4 with OpenVPN. Add the following to your server.conf file and there will no changes require to your client.conf file.
 
  -  Server Configurations
  	<pre>
