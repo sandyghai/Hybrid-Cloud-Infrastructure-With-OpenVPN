@@ -134,7 +134,9 @@ Discussion
 This will provide you an overview to understand and implement a hybrid solution using AWS and OpenVPN.
 
 Have you implemented this solution?
-Yes, I implemented using serverless architecture which allows us to automate and orchestrate OpenVPN environment.
+
+Yes, I implemented using serverless architecture which allows us to automate and orchestrate OpenVPN environment and connect with our clients.
 
 Is this cost-effective?
+
 Yes, It's cheaper than building a hybrid environment using AWS VPN Gateway and AWS Direct Connect.
